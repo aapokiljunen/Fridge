@@ -1,0 +1,19 @@
+{% extends "fridge/base.html" %}
+{% block "content" %}
+	<h2>Your storages</h2>
+	{% for storage in object_list  %}
+		<p>
+			<b><a href="storage/{{ storage.pk }}">{{ storage }}</a></b>
+		</p>
+		<ul>
+		{% for thing in storage.things.all  %}
+			<li><a href="thing/{{ thing.pk }}"> {{ thing.product }}</a>
+			{% if thing.name %}
+				, "{{ thing.name }}" </li>
+			{% endif %}
+		{% endfor %}
+		</ul>	
+	{% endfor %}
+	<br>
+	<p><a href="storage/new">Add new storage</a></p>
+{% endblock "content" %}
