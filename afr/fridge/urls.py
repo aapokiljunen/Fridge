@@ -21,9 +21,9 @@ urlpatterns = [
 	path('manufacturer/new', ManufacturerCreateView.as_view()),
 	path('manufacturer/<int:pk>', ManufacturerDetailView.as_view()),
 	
-  	#path('register', RegisterView.as_view()),
-	#path('accounts/login/register', RegisterView.as_view()),
-	#path('login', LoginView.as_view(next_page="/")),
-	#path('accounts/login/', LoginView.as_view(next_page="/")),
-	#path('logout', LogoutView.as_view(next_page="/")),    
+  	path('register', RegisterView.as_view()),
+	path('accounts/login/register', RegisterView.as_view()),
+	path('login', LoginView.as_view(next_page="/")),
+	path('accounts/login/', LoginView.as_view(next_page="/")),
+	path('logout', LogoutView.as_view(next_page="/")),    
 ]	

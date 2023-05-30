@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.db import models
 from django.contrib.auth.models import User
 from datetime import date
@@ -23,7 +24,7 @@ class Product(models.Model):
 	modified = models.DateTimeField(auto_now=True, null=True)
 
 	def __str__(self):
-		return f"{self.name}. {self.size}."
+		return f"{self.name} {self.size}"
 
 class Storage(models.Model):
 	name = models.CharField(max_length=160)
@@ -31,16 +32,19 @@ class Storage(models.Model):
 	created = models.DateTimeField(auto_now_add=True, null=True)
 	modified = models.DateTimeField(auto_now=True, null=True)
 
+	owner = models.ForeignKey(
+		settings.AUTH_USER_MODEL, 
+		on_delete=models.CASCADE,
+		null=True
+	)
+	
 	def __str__(self):
-		return self.name		
+		return f"{self.owner}'s {self.name}"		
 
 class Thing(models.Model):
 	name = models.CharField(max_length=200, blank=True)
 	description = models.TextField(blank=True)
-	expiration_date  = models.DateField(
-		blank=True, 
-		null=True
-	)
+	expiration_date = models.DateField()
 	product = models.ForeignKey(
 		Product, 
 		on_delete=models.CASCADE,
@@ -54,7 +58,11 @@ class Thing(models.Model):
 	created = models.DateTimeField(auto_now_add=True, null=True)
 	modified = models.DateTimeField(auto_now=True, null=True)
 	
-	#owner = models.ForeignKey(User, on_delete=models.CASCADE)
+	owner = models.ForeignKey(
+		settings.AUTH_USER_MODEL, 
+		on_delete=models.CASCADE,
+		null=True
+	)
 
 	def __str__(self):
 		return f'{self.product} in {self.storage}'
