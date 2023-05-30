@@ -1,0 +1,21 @@
+{% extends "fridge/base.html" %}
+{% block "content" %}
+	{% if object %}
+		<h2>Edit your storage</h2>
+	{% else %}
+		<h2>Add new storage</h2>
+	{% endif %}		
+	<form method=post>
+		{% csrf_token %}
+		{{ form.as_p }}
+		<p>
+			<a href="/">Cancel</a>
+			<input type=submit value="Submit">
+		</p>
+	</form>
+
+	{% if object %}
+		<p><a href="/storage/{{ object.pk }}/delete">Delete this storage</a></p>
+	{% endif %}
+	
+{% endblock "content" %}

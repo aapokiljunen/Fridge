@@ -1,4 +1,4 @@
-from django.views.generic import ListView, CreateView, UpdateView, DeleteView
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.forms import UserCreationForm
 
@@ -9,7 +9,7 @@ class ThingListView(ListView):
 	
 class ThingUpdateView(UpdateView):
 	model = Thing
-	fields = ["name",]
+	fields = ["product", "storage", "expiration_date", "name", "description",]
 	success_url = "/"
 
 	#def test_func(self):
@@ -18,7 +18,7 @@ class ThingUpdateView(UpdateView):
 	
 class ThingCreateView(CreateView):
 	model = Thing
-	fields = ["name"]
+	fields = ["product", "storage", "expiration_date", "name", "description",]
 	success_url = "/"
 
 	#def form_valid(self, form):
@@ -54,21 +54,27 @@ class StorageDeleteView(DeleteView):
 
 class ProductListView(ListView):
 	model = Product
+
+class ProductDetailView(DetailView):
+		model = Product
 	
 class ProductCreateView(CreateView):
 	model = Product
 	fields = ["name",]
 	success_url = "/"
+	
 
 class ManufacturerListView(ListView):
-		model = Product
+		model = Manufacturer
+
+class ManufacturerDetailView(DetailView):
+		model = Manufacturer
 		
 class ManufacturerCreateView(CreateView):
-		model = Product
+		model = Manufacturer
 		fields = ["name",]
 		success_url = "/"
 		
-
 class RegisterView(CreateView):
 	form_class = UserCreationForm
 	template_name = "registration/register.html"

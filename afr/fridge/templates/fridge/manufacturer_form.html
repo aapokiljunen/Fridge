@@ -1,0 +1,17 @@
+{% extends "fridge/base.html" %}
+{% block "content" %}
+	{% if object %}
+		<h2>Edit your manufacturer</h2>
+	{% else %}
+		<h2>Add new manufacturer</h2>
+	{% endif %}		
+	<form method=post>
+		{% csrf_token %}
+		{{ form.as_p }}
+		<p>
+			<a href="product/new">Cancel</a>
+			<input type=submit value="Submit">
+		</p>
+	</form>
+	
+{% endblock "content" %}

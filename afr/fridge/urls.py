@@ -15,9 +15,11 @@ urlpatterns = [
 	
 	path('product_list', ProductListView.as_view()),
 	path('product/new', ProductCreateView.as_view()),
+	path('product/<int:pk>', ProductDetailView.as_view()),
 
 	path('manufacturer_list', ManufacturerListView.as_view()),
 	path('manufacturer/new', ManufacturerCreateView.as_view()),
+	path('manufacturer/<int:pk>', ManufacturerDetailView.as_view()),
 	
   	#path('register', RegisterView.as_view()),
 	#path('accounts/login/register', RegisterView.as_view()),

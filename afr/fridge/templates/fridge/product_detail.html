@@ -1,0 +1,7 @@
+{% extends "fridge/base.html" %}
+{% block "content" %}
+	<h2>{{ object }}</h2>
+	Manufacturer: <a href = "/manufacturer/{{object.manufacturer.pk}}/detail"> {{ object.manufacturer }} </a>		
+
+	<p><a href = "/">Back to homepage<a></p>
+{% endblock "content" %}

@@ -1,0 +1,27 @@
+{% extends "fridge/base.html" %}
+{% block "content" %}
+	{% if object %}
+		<h2>Edit your item</h2>
+	{% else %}
+		<h2>Add new item</h2>
+	{% endif %}		
+	<form method=post>
+		{% csrf_token %}
+		{{ form.as_p }}
+		<p>
+			<a href="/">Cancel</a>
+			<input type=submit value="Submit">
+		</p>
+	</form>
+
+	{% if object %}
+		<p><a href="/thing/{{ object.pk }}/delete">Delete this item</a></p>
+	{% endif %}
+	
+	<p> <a href="/storage/new">Add new storage</a>
+		<br>Don't you find product you are looking? 
+		<a href="/product/new">Add new!</a>
+	</p>
+	
+	
+{% endblock "content" %}

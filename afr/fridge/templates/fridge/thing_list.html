@@ -1,15 +1,15 @@
 {% extends "fridge/base.html" %}
 
 {% block "content" %}
-	<h2>All trips</h2>
+	<h2>All your items</h2>
 	{% for object in object_list  %}
-	<!--
+	
 		<p>
-			{% if object.traveller %}
-				 <a href="/traveller/{{ object.traveller.pk }}">{{ object.traveller }}</a>
-			{% endif %} to 
-			{% if object.destination %}
-				 <a href="/destination/{{ object.destination.pk }}">{{ object.destination }}</a>.
+			{% if object.product %}
+				 <a href="/product/{{ object.product.pk }}">{{ object.product }}</a>
+			{% endif %} 
+			{% if object.storage %}
+				in  <a href="/storage/{{ object.storage.pk }}">{{ object.storage }}</a>.
 			{% endif %}
 			{% if object.name %}
 				"{{ object.name }}"
@@ -18,6 +18,6 @@
 		</p>
 	{% endfor %}
 	<br>
-	<p><a href="trip/new">Add a trip</a></p> -->
+	<p><a href="trip/new">Add item</a></p>
 {% endblock "content" %}
  
