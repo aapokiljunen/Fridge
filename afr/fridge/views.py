@@ -4,73 +4,104 @@ from django.contrib.auth.forms import UserCreationForm
 
 from .models import *
 
-class ThingListView(ListView):
+class ThingListView(LoginRequiredMixin, ListView):
+
+	def get_queryset(self):
+		return Thing.objects.filter(owner__username=self.request.user)
+		
+class ThingUpdateView(UserPassesTestMixin, UpdateView):
 	model = Thing
+	fields = [
+		"product", 
+		"storage",
+		"expiration_date",
+		"name", 
+		"description",
+	]
+	success_url = "/"
 	
-class ThingUpdateView(UpdateView):
+	def test_func(self):
+		object = self.get_object()
+		return self.request.user == object.owner
+	
+class ThingCreateView(LoginRequiredMixin, CreateView):
 	model = Thing
-	fields = ["product", "storage", "expiration_date", "name", "description",]
+	fields = [
+		"product", 
+		"storage",
+		"expiration_date", 
+		"name", 
+		"description",
+		]
 	success_url = "/"
 
-	#def test_func(self):
-	#	object = self.get_object()
-	#	return self.request.user == object.owner
+	def form_valid(self, form):
+		form.instance.owner = self.request.user
+		return super().form_valid(form)
 	
-class ThingCreateView(CreateView):
-	model = Thing
-	fields = ["product", "storage", "expiration_date", "name", "description",]
-	success_url = "/"
-
-	#def form_valid(self, form):
-	#	form.instance.owner = self.request.user
-	#	return super().form_valid(form)
-	
-class ThingDeleteView(DeleteView):
+class ThingDeleteView(UserPassesTestMixin, DeleteView):
 	model = Thing
 	success_url = "/"
 
-	#def test_func(self):
-	#	object = self.get_object()
-	#	return self.request.user == object.owner
+	def test_func(self):
+		object = self.get_object()
+		return self.request.user == object.owner
 	
 
-class StorageListView(ListView):
-	model = Storage
+class StorageListView(LoginRequiredMixin, ListView):
+
+	def get_queryset(self):
+		return Storage.objects.filter(owner__username=self.request.user)
 	
-class StorageUpdateView(UpdateView):
+class StorageUpdateView(UserPassesTestMixin, UpdateView):
 	model = Storage
 	fields = ["name",]
 	success_url = "/"
+
+	def test_func(self):
+		object = self.get_object()
+		return self.request.user == object.owner
 	
-class StorageCreateView(CreateView):
+class StorageCreateView(LoginRequiredMixin, CreateView):
 	model = Storage
 	fields = ["name"]
 	success_url = "/"
+
+	def form_valid(self, form):
+		form.instance.owner = self.request.user
+		return super().form_valid(form)
+
+class StorageDetailView(LoginRequiredMixin, DetailView):
+	model = Product
 	
-class StorageDeleteView(DeleteView):
+class StorageDeleteView(UserPassesTestMixin, DeleteView):
 	model = Storage
 	success_url = "/"
 
+	def test_func(self):
+		object = self.get_object()
+		return self.request.user == object.owner
 
-class ProductListView(ListView):
+
+class ProductListView(LoginRequiredMixin, ListView):
 	model = Product
 
-class ProductDetailView(DetailView):
+class ProductDetailView(LoginRequiredMixin, DetailView):
 	model = Product
 	
-class ProductCreateView(CreateView):
+class ProductCreateView(LoginRequiredMixin, CreateView):
 	model = Product
 	fields = ["name", "size", "manufacturer",]
 	success_url = "/"
 	
 
-class ManufacturerListView(ListView):
+class ManufacturerListView(LoginRequiredMixin, ListView):
 		model = Manufacturer
 
-class ManufacturerDetailView(DetailView):
+class ManufacturerDetailView(LoginRequiredMixin, DetailView):
 		model = Manufacturer
 		
-class ManufacturerCreateView(CreateView):
+class ManufacturerCreateView(LoginRequiredMixin, CreateView):
 		model = Manufacturer
 		fields = ["name",]
 		success_url = "/"

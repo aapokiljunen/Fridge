@@ -7,20 +7,22 @@
 	</head>
 	<body>
 		<header>
-			<a href="/">Home</a>
-			<a href="/thing_list">All your products</a> 
 			{% if user.is_authenticated  %}
-				-- Hello {{ user }}
+				<a href="/">Home</a>
+				<a href="/thing_list">All your products</a> 
+				-- Hello {{ user }} 
 				<a href="/logout">Log out</a>
 			{% else %}
-				<a href="register">Register new account</a>
+				<a href="/about">About</a> 
+				 <a href="register">Register new account</a>
+				 <a href="/login">Login</a>
 			{% endif %}
 		</header>
-	<h1>Your Fridge</h1>
+		<h1>Your Fridge</h1>
 
-	{% block "content" %}	
-		empty page
-	{% endblock "content" %}	
+		{% block "content" %}	
+			empty page
+		{% endblock "content" %}	
 		
 	</body>
 	

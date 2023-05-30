@@ -1,0 +1,12 @@
+{% extends "fridge/base.html" %}
+{% block "content" %}
+	<p>Delete storage <b>{{ object }}</b> and all items in it?
+
+	<form method=post>
+		{% csrf_token %}
+		<input type=submit value="Delete">
+	</form>
+	
+	<p><a href="/">Cancel</a></p>
+	
+{% endblock "content" %}
