@@ -14,9 +14,8 @@
 					,"{{ thing.name }}"
 				{% endif %}
 				{% if thing.expiration_date %} 
-					{% if thing.expiration_date.is_past_due %}
-						<mark class:"red">exp. {{ thing.expiration_date }}"</mark>
-						vanhentunut
+					{% if thing.is_past_due %}
+						<mark class:"red">expired! {{ thing.expiration_date }}</mark>	
 					{% else %}
 						exp. {{ thing.expiration_date }}
 					{% endif %}

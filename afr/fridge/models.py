@@ -23,7 +23,7 @@ class Product(models.Model):
 	modified = models.DateTimeField(auto_now=True, null=True)
 
 	def __str__(self):
-		return self.name
+		return f"{self.name}. {self.size}."
 
 class Storage(models.Model):
 	name = models.CharField(max_length=160)
@@ -62,6 +62,7 @@ class Thing(models.Model):
 	class Meta:
 		ordering = ['expiration_date']
 
+	@property
 	def is_past_due(self):
-		return date.today() > self.date
+		return date.today() > self.expiration_date
 

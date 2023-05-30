@@ -5,19 +5,24 @@
 	{% for object in object_list  %}
 	
 		<p>
-			{% if object.product %}
-				 <a href="/product/{{ object.product.pk }}">{{ object.product }}</a>
-			{% endif %} 
-			{% if object.storage %}
-				in  <a href="/storage/{{ object.storage.pk }}">{{ object.storage }}</a>.
-			{% endif %}
-			{% if object.name %}
-				"{{ object.name }}"
-			{% endif %}
-			<b><a href="trip/{{ object.pk }}">UPDATE</a></b>
+			<li>
+				<a href="/thing/{{ object.pk }}">{{ object.product }}</a>
+				in <a href="/storage/{{ object.storage.pk }}">{{ object.storage }}</a>.
+				{% if object.name %}
+					"{{ object.name }}"
+				{% endif %}
+				{% if object.expiration_date %} 
+					{% if object.is_past_due %}
+						<mark class:"red">expired! {{ object.expiration_date }}</mark>	
+					{% else %}
+						exp. {{ object.expiration_date }}
+					{% endif %}
+
+				{% endif %}
+			 </li>
 		</p>
 	{% endfor %}
 	<br>
-	<p><a href="trip/new">Add item</a></p>
+	<p><a href="thing/new">Add item</a></p>
 {% endblock "content" %}
  

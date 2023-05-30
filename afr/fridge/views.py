@@ -56,11 +56,11 @@ class ProductListView(ListView):
 	model = Product
 
 class ProductDetailView(DetailView):
-		model = Product
+	model = Product
 	
 class ProductCreateView(CreateView):
 	model = Product
-	fields = ["name",]
+	fields = ["name", "size", "manufacturer",]
 	success_url = "/"
 	
 

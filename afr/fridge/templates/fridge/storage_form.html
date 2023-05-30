@@ -1,7 +1,27 @@
 {% extends "fridge/base.html" %}
 {% block "content" %}
 	{% if object %}
-		<h2>Edit your storage</h2>
+		<h2>{{ object }}</h2>
+			<p>
+				Items in {{ object }}
+				{% for thing in object.things.all %}
+					<li>
+						<a href="/thing/{{ thing.pk }}">{{ thing }}</a>
+						{% if thing.name %}
+							"{{ thing.name }}"
+						{% endif %}
+						{% if thing.expiration_date %} 
+							{% if thing.is_past_due %}
+								<mark class:"red">expired! {{ thing.expiration_date }}</mark>	
+							{% else %}
+								exp. {{ thing.expiration_date }}
+							{% endif %}
+
+						{% endif %}
+					 </li>
+				 {% endfor %}
+			</p>
+		
 	{% else %}
 		<h2>Add new storage</h2>
 	{% endif %}		
