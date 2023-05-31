@@ -23,6 +23,14 @@ class ThingUpdateView(UserPassesTestMixin, UpdateView):
 	def test_func(self):
 		object = self.get_object()
 		return self.request.user == object.owner
+
+	def get_form(self, form_class=None):
+		form = super().get_form(form_class)
+		form.fields['storage'].queryset = Storage.objects.filter(
+			owner__username__in =[self.request.user.username]
+		)
+		form.fields['storage'].required = True
+		return form
 	
 class ThingCreateView(LoginRequiredMixin, CreateView):
 	model = Thing
@@ -38,6 +46,15 @@ class ThingCreateView(LoginRequiredMixin, CreateView):
 	def form_valid(self, form):
 		form.instance.owner = self.request.user
 		return super().form_valid(form)
+
+	def get_form(self, form_class=None):
+		form = super().get_form(form_class)
+		form.fields['storage'].queryset = Storage.objects.filter(
+			owner__username__in =[self.request.user.username]
+		)
+		form.fields['storage'].required = True
+		return form
+	
 	
 class ThingDeleteView(UserPassesTestMixin, DeleteView):
 	model = Thing
